@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\SmartPRReview.Domain\SmartPRReview.Domain.csproj" />
+  </ItemGroup>
+</Project>
+
