@@ -1,0 +1,26 @@
+{
+  "Runner": {
+    "AllowedRepositories": ["YOUR_ORGANIZATION/YOUR_REPOSITORY"],
+    "RestoreNetwork": "smartpr-restore",
+    "RegistryProxy": "http://registry-proxy:3128",
+    "TimeoutSeconds": 600,
+    "Profiles": [
+      {
+        "Repository": "YOUR_ORGANIZATION/YOUR_REPOSITORY",
+        "Image": "node:24-bookworm-slim@sha256:CONFIGURE_VERIFIED_IMAGE_DIGEST",
+        "Directory": "frontend",
+        "Restore": ["npm", "ci", "--ignore-scripts", "--cache", "/work/.npm"],
+        "Build": ["npm", "run", "build"],
+        "Test": ["npm", "run", "test:unit", "--", "--run"]
+      },
+      {
+        "Repository": "YOUR_ORGANIZATION/YOUR_REPOSITORY",
+        "Image": "mcr.microsoft.com/dotnet/sdk:8.0@sha256:CONFIGURE_VERIFIED_IMAGE_DIGEST",
+        "Directory": ".",
+        "Restore": ["dotnet", "restore", "YourSolution.sln"],
+        "Build": ["dotnet", "build", "YourSolution.sln", "--no-restore"],
+        "Test": ["dotnet", "test", "YourSolution.sln", "--no-build", "--no-restore"]
+      }
+    ]
+  }
+}

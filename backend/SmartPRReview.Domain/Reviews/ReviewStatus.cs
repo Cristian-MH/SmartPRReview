@@ -2,9 +2,7 @@ namespace SmartPRReview.Domain.Reviews;
 
 public enum ReviewStatus
 {
-    Queued,
-    Processing,
+    Processing = 1,
     Completed,
     Failed
 }
-

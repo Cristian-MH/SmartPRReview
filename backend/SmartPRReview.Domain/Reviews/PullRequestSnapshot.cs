@@ -16,7 +16,11 @@ public sealed record PullRequestSnapshot(
     int Additions,
     int Deletions,
     int ChangedFileCount,
-    IReadOnlyCollection<ChangedFileSnapshot> Files);
+    IReadOnlyCollection<ChangedFileSnapshot> Files)
+{
+    public string? BaseRepository { get; init; }
+    public string? HeadRepository { get; init; }
+}
 
 public sealed record ChangedFileSnapshot(
     string Path,
@@ -26,4 +30,3 @@ public sealed record ChangedFileSnapshot(
     int Changes,
     string? PreviousPath,
     string? Patch);
-

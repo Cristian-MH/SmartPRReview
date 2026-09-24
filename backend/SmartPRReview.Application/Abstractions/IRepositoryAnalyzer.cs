@@ -6,7 +6,8 @@ public interface IRepositoryAnalyzer
 {
     Task<AnalysisResult> AnalyzeAsync(
         RepositoryReference repository,
-        CancellationToken cancellationToken);
+        CancellationToken cancellationToken,
+        string? gitHubToken = null);
 }
 
 public sealed record AnalysisResult(

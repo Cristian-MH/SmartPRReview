@@ -1,20 +1,18 @@
 using System.Text.Json.Serialization;
-using SmartPRReview.Api.Contracts;
-using SmartPRReview.Api.Workers;
 using SmartPRReview.Application.Reviews;
-using SmartPRReview.Domain.Reviews;
 using SmartPRReview.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Configuration.AddJsonFile("appsettings.Ai.local.json", optional: true, reloadOnChange: false)
+    .AddEnvironmentVariables().AddCommandLine(args);
 
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
-builder.Services.ConfigureHttpJsonOptions(options =>
-    options.SerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+builder.Services.AddControllers().AddJsonOptions(options =>
+    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 builder.Services.AddSingleton(TimeProvider.System);
-builder.Services.AddSingleton<ReviewService>();
+builder.Services.AddScoped<ReviewService>();
 builder.Services.AddInfrastructure(builder.Configuration);
-builder.Services.AddHostedService<ReviewWorker>();
 builder.Services.AddProblemDetails();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -29,6 +27,17 @@ builder.Services.AddSwaggerGen(options =>
 
 var app = builder.Build();
 
+if (builder.Configuration["verify-ai"] is { } verificationProvider)
+{
+    using var cancellation = new CancellationTokenSource(TimeSpan.FromMinutes(6));
+    Console.CancelKeyPress += (_, e) => { e.Cancel = true; cancellation.Cancel(); };
+    using var verificationScope = app.Services.CreateScope();
+    Environment.ExitCode = await SmartPRReview.Api.AiSetupVerification.RunAsync(
+        verificationScope.ServiceProvider, verificationProvider, builder.Environment.ContentRootPath, cancellation.Token);
+    await app.DisposeAsync();
+    return;
+}
+
 app.UseExceptionHandler();
 app.UseSwagger();
 app.UseSwaggerUI(options =>
@@ -37,73 +46,8 @@ app.UseSwaggerUI(options =>
     options.DocumentTitle = "SmartPRReview API";
 });
 
-app.MapGet("/health", () => Results.Ok(new { status = "healthy" }))
-    .WithName("HealthCheck")
-    .WithTags("System");
-
-var reviews = app.MapGroup("/api/reviews");
-
-reviews.MapPost("/", async (
-    CreateReviewRequest request,
-    ReviewService service,
-    CancellationToken cancellationToken) =>
-{
-    var errors = Validate(request);
-    if (errors.Count > 0)
-    {
-        return Results.ValidationProblem(errors);
-    }
-
-    var repository = new RepositoryReference(
-        request.Provider,
-        request.Location.Trim(),
-        request.PullRequestNumber,
-        request.BaseReference,
-        request.HeadReference);
-
-    var review = await service.CreateAsync(
-        new CreateReviewCommand(repository),
-        cancellationToken);
-
-    var location = $"/api/reviews/{review.Id}";
-    return Results.Accepted(location, review);
-})
-    .WithName("CreateReview")
-    .WithSummary("Queue a repository for review")
-    .WithDescription("Receives the repository as a request parameter and returns a cached review identifier.")
-    .Produces<Review>(StatusCodes.Status202Accepted)
-    .ProducesValidationProblem();
-
-reviews.MapGet("/{id:guid}", async (
-    Guid id,
-    ReviewService service,
-    CancellationToken cancellationToken) =>
-{
-    var review = await service.GetAsync(id, cancellationToken);
-    return review is null ? Results.NotFound() : Results.Ok(review);
-})
-    .WithName("GetReview")
-    .WithSummary("Get a cached review")
-    .Produces<Review>()
-    .Produces(StatusCodes.Status404NotFound);
+app.MapControllers();
 
 app.Run();
-
-static Dictionary<string, string[]> Validate(CreateReviewRequest request)
-{
-    var errors = new Dictionary<string, string[]>();
-
-    if (string.IsNullOrWhiteSpace(request.Location))
-    {
-        errors[nameof(request.Location)] = ["Repository location is required."];
-    }
-
-    if (request.PullRequestNumber is <= 0)
-    {
-        errors[nameof(request.PullRequestNumber)] = ["Pull request number must be greater than zero."];
-    }
-
-    return errors;
-}
 
 public partial class Program;

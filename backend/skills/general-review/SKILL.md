@@ -1,0 +1,1 @@
+﻿Review uncovered languages and documentation/build/CI changes using only demonstrable evidence. Check contracts, obvious logic faults and workflow/configuration consistency. State language/framework expertise limits where unsupported. Never claim specialized verification of an unsupported stack. Do not repeat findings already allocated to specialized profiles.

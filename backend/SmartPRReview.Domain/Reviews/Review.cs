@@ -11,15 +11,9 @@ public sealed record Review(
     IReadOnlyCollection<ReviewFinding> Findings,
     string? Error)
 {
+    public AiReview? Ai { get; init; }
     public static Review Create(Guid id, RepositoryReference repository, DateTimeOffset now) =>
-        new(id, repository, ReviewStatus.Queued, now, now, null, null, [], null);
-
-    public Review Start(DateTimeOffset now) => this with
-    {
-        Status = ReviewStatus.Processing,
-        UpdatedAt = now,
-        Error = null
-    };
+        new(id, repository, ReviewStatus.Processing, now, now, null, null, [], null);
 
     public Review Complete(
         string summary,

@@ -1,4 +1,4 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
@@ -10,6 +10,16 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartPRReview.Infrastructure", "backend\SmartPRReview.Infrastructure\SmartPRReview.Infrastructure.csproj", "{B2FA3333-9AB2-455B-B7AF-029AB728B103}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartPRReview.Api", "backend\SmartPRReview.Api\SmartPRReview.Api.csproj", "{B2FA4444-9AB2-455B-B7AF-029AB728B104}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "runner", "runner", "{E827C98D-C91C-44EE-96E2-AA22B7779335}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartPRReview.Runner", "runner\SmartPRReview.Runner\SmartPRReview.Runner.csproj", "{57F311BD-B830-4E88-9DB9-3CC862867533}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backend", "backend", "{DB9D945A-3260-4EC3-8BA3-60ACB6B62933}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{F796DCC5-6B66-4658-8401-7C54A5BB445B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartPRReview.Tests", "backend\tests\SmartPRReview.Tests\SmartPRReview.Tests.csproj", "{65F7506B-0E5C-441C-AA09-45078B10D244}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +43,18 @@ Global
 		{B2FA4444-9AB2-455B-B7AF-029AB728B104}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2FA4444-9AB2-455B-B7AF-029AB728B104}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2FA4444-9AB2-455B-B7AF-029AB728B104}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57F311BD-B830-4E88-9DB9-3CC862867533}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57F311BD-B830-4E88-9DB9-3CC862867533}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57F311BD-B830-4E88-9DB9-3CC862867533}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57F311BD-B830-4E88-9DB9-3CC862867533}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65F7506B-0E5C-441C-AA09-45078B10D244}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65F7506B-0E5C-441C-AA09-45078B10D244}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65F7506B-0E5C-441C-AA09-45078B10D244}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65F7506B-0E5C-441C-AA09-45078B10D244}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{57F311BD-B830-4E88-9DB9-3CC862867533} = {E827C98D-C91C-44EE-96E2-AA22B7779335}
+		{F796DCC5-6B66-4658-8401-7C54A5BB445B} = {DB9D945A-3260-4EC3-8BA3-60ACB6B62933}
+		{65F7506B-0E5C-441C-AA09-45078B10D244} = {F796DCC5-6B66-4658-8401-7C54A5BB445B}
 	EndGlobalSection
 EndGlobal
-

@@ -5,3 +5,12 @@
 *.user
 *.suo
 .tmp-build/
+**/appsettings.*.local.json
+**/appsettings.*.local.json.tmp
+evaluations/results/
+**/node_modules/
+frontend/dist/
+frontend/test-results/
+frontend/playwright-report/
+frontend/.env.local
+frontend/.env.*.local

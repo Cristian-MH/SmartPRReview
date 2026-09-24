@@ -1,0 +1,19 @@
+﻿{
+    "markers":  [
+                    "\"node\""
+                ],
+    "extensions":  [
+                       ".js",
+                       ".jsx",
+                       ".ts",
+                       ".tsx",
+                       ".mjs",
+                       ".cjs",
+                       "package.json"
+                   ],
+    "id":  "node",
+    "references":  [
+
+                   ],
+    "version":  "1.0.0"
+}

@@ -1,0 +1,17 @@
+﻿{
+    "markers":  [
+                    "\"vue\""
+                ],
+    "extensions":  [
+                       ".vue",
+                       ".ts",
+                       ".tsx",
+                       ".js",
+                       ".jsx"
+                   ],
+    "id":  "vue-typescript",
+    "references":  [
+
+                   ],
+    "version":  "1.0.0"
+}

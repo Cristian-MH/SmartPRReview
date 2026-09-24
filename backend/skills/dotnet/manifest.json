@@ -1,0 +1,17 @@
+﻿{
+    "markers":  [
+
+                ],
+    "extensions":  [
+                       ".cs",
+                       ".csproj",
+                       ".props",
+                       ".targets",
+                       ".sln"
+                   ],
+    "id":  "dotnet",
+    "references":  [
+
+                   ],
+    "version":  "1.0.0"
+}

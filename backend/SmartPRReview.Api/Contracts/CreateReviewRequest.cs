@@ -7,4 +7,10 @@ public sealed record CreateReviewRequest(
     string Location,
     int? PullRequestNumber,
     string? BaseReference,
-    string? HeadReference);
+    string? HeadReference,
+    string? GitHubToken = null,
+    AiSelection? Ai = null,
+    string? AiApiKey = null)
+{
+    public override string ToString() => "CreateReviewRequest { credentials redacted }";
+}

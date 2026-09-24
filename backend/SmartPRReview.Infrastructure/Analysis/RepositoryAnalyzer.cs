@@ -8,7 +8,8 @@ public sealed class RepositoryAnalyzer(IGitHubPullRequestClient gitHubClient) : 
 {
     public async Task<AnalysisResult> AnalyzeAsync(
         RepositoryReference repository,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        string? gitHubToken = null)
     {
         if (repository.Provider is not RepositoryProvider.GitHub)
         {
@@ -27,7 +28,8 @@ public sealed class RepositoryAnalyzer(IGitHubPullRequestClient gitHubClient) : 
         var pullRequest = await gitHubClient.GetAsync(
             repository.Location,
             repository.PullRequestNumber.Value,
-            cancellationToken);
+            cancellationToken,
+            gitHubToken);
 
         var summary = $"Retrieved GitHub pull request #{pullRequest.Number}: " +
                       $"{pullRequest.Title}. {pullRequest.ChangedFileCount} changed files, " +
